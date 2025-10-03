@@ -38,10 +38,16 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
-          body: ${{ steps.ai-response.outputs.response }}
+          body: |
+            Cette réponse est générée avec l'action peter-evans/create-or-update-comment
+
+            ${{ steps.ai-response.outputs.response }}
       - name: Ajoute un commentaire en passant par le CLI gh
         env:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
           REPO: ${{ github.repository }}
-          BODY: ${{ steps.ai-response.outputs.response }}
+          BODY: |
+            Cette réponse est générée avec le CLI gh
+
+            ${{ steps.ai-response.outputs.response }}
         run: gh issue comment ${{ github.event.issue.number }} --repo $REPO --body "$BODY"
