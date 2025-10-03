@@ -61,3 +61,10 @@ jobs:
           repo: ${{ github.repository }}
           number: ${{ github.event.issue.number }}
           labels: 'question'
+      
+      - name: M'assigne l'issue avec le CLI gh
+        env:
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          REPO: ${{ github.repository }}
+          USER: ${{ github.event.issue.user.login }}
+        run: gh issue edit ${{ github.event.issue.number }} --repo $REPO --add-assignee $USER
