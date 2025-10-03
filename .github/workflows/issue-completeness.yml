@@ -33,6 +33,7 @@ jobs:
             ---
             ${{github.event.issue.body}}
             ---
+
       - name: Ajoute un commentaire sur l'issue
         uses: peter-evans/create-or-update-comment@v4
         with:
@@ -42,6 +43,7 @@ jobs:
             Cette réponse est générée avec l'action peter-evans/create-or-update-comment
 
             ${{ steps.ai-response.outputs.response }}
+
       - name: Ajoute un commentaire en passant par le CLI gh
         env:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -51,3 +53,11 @@ jobs:
 
             ${{ steps.ai-response.outputs.response }}
         run: gh issue comment ${{ github.event.issue.number }} --repo $REPO --body "$BODY"
+
+      - name: Ajoute un label "Question" à l'issue
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repo: ${{ github.repository }}
+          number: ${{ github.event.issue.number }}
+          labels: 'question'
