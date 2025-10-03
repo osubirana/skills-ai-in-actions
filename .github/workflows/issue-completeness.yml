@@ -39,3 +39,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: ${{ steps.ai-response.outputs.response }}
+      - name: Ajoute un commentaire en passant par le CLI gh
+        env:
+          token: ${{secrets.GITHUB_TOKEN}}
+        run: gh issue comment ${{ github.event.issue.number }} --body ${{ steps.ai-reponse.outputs.response }}
+          
