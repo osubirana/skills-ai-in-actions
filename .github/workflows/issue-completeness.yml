@@ -2,7 +2,7 @@ name: Issue Completeness
 
 on:
   issues:
-    types: [opened]
+    types: [opened, edited]
 
 permissions:
   issues: write
@@ -37,5 +37,5 @@ jobs:
         uses: peter-evans/create-or-update-comment@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          issue_number: ${{ github.event.issue.number }}
+          issue-number: ${{ github.event.issue.number }}
           body: ${{ steps.ai-response.outputs.response }}
